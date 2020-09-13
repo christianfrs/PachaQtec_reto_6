@@ -119,6 +119,84 @@ class Cursos:
         except Exception as e:
             raise print(e)
 
+    def fetchall_curso(self):
+        try:
+            conn = Connection()
+            query = '''
+                SELECT * FROM nivel_educativo;
+            '''
+            cursor = conn.execute_query(query)
+            rows = cursor.fetchall()
+            for row in rows:
+                print(f'id_curso = {row[0]}')
+                print(f'nombre_curso = {row[1]}')
+                print('=====================')
+        except Exception as e:
+            print(f'{str(e)}')
+
+    def fetchone_curso(self):
+        try:
+            conn = Connection()
+            query = '''
+                SELECT * FROM nivel_educativo;
+            '''
+            cursor = conn.execute_query(query)
+            row = cursor.fetchone()
+            print(f'id_curso = {row[0]}')
+            print(f'nombre_curso = {row[1]}')
+            print('=====================')
+        except Exception as e:
+            print(f'{str(e)}')
+
+    def fetchmany_curso(self):
+        try:
+            conn = Connection()
+            query = '''
+                SELECT * FROM nivel_educativo;
+            '''
+            cursor = conn.execute_query(query)
+            rows = cursor.fetchmany(2)
+            print('First -> 2 rows')
+            for row in rows:
+                print(f'id_curso = {row[0]}')
+                print(f'nombre_curso = {row[1]}')
+                print('=====================')
+            rows = cursor.fetchmany(3)
+            print('Seconds -> 2 rows')
+            for row in rows:
+                print(f'id_curso = {row[0]}')
+                print(f'nombre_curso = {row[1]}')
+                print('=====================')
+        except Exception as e:
+            print(f'{str(e)}')
+
+    def insert_curso(self):
+        try:
+            #[model, price] => model,price
+            conn = Connection()
+            query = f'''
+                INSERT INTO nivel_educativo (nombre_curso) 
+                VALUES('{self.nombre_curso}')
+            '''
+            conn.execute_query(query)
+            conn.commit()
+            print(f'Se agrego un nivel educativo -> {self.nombre_curso}')
+        except Exception as e:
+            print(f'{str(e)}')
+
+    def update_curso(self, id):
+        try:
+            conn = Connection()
+            query = f'''
+                UPDATE mobile SET model = '{self.nombre_curso}' WHERE id = {id};
+            '''
+            conn.execute_query(query)
+            conn.commit()
+
+            print(f'Se actualizo el nievel educativo con el ID {id} por -> {self.nombre_curso}')
+        except Exception as e:
+            print(f'{str(e)}')
+
 class Alumno:
     def __init__(self, id_alumno='', nombre_alumno=''):
         self.id_alumno = id_alumno
