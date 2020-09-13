@@ -19,4 +19,3 @@ class Connection:
     def commit(self):
         self.db.commit()
         return True
-
