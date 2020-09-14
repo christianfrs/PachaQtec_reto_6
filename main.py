@@ -123,7 +123,7 @@ class Cursos:
         try:
             conn = Connection()
             query = '''
-                SELECT * FROM nivel_educativo;
+                SELECT * FROM curso;
             '''
             cursor = conn.execute_query(query)
             rows = cursor.fetchall()
@@ -138,7 +138,7 @@ class Cursos:
         try:
             conn = Connection()
             query = '''
-                SELECT * FROM nivel_educativo;
+                SELECT * FROM curso;
             '''
             cursor = conn.execute_query(query)
             row = cursor.fetchone()
@@ -152,7 +152,7 @@ class Cursos:
         try:
             conn = Connection()
             query = '''
-                SELECT * FROM nivel_educativo;
+                SELECT * FROM curso;
             '''
             cursor = conn.execute_query(query)
             rows = cursor.fetchmany(2)
@@ -175,12 +175,12 @@ class Cursos:
             #[model, price] => model,price
             conn = Connection()
             query = f'''
-                INSERT INTO nivel_educativo (nombre_curso) 
+                INSERT INTO curso (nombre_curso) 
                 VALUES('{self.nombre_curso}')
             '''
             conn.execute_query(query)
             conn.commit()
-            print(f'Se agrego un nivel educativo -> {self.nombre_curso}')
+            print(f'Se agrego un curso -> {self.nombre_curso}')
         except Exception as e:
             print(f'{str(e)}')
 
@@ -193,7 +193,7 @@ class Cursos:
             conn.execute_query(query)
             conn.commit()
 
-            print(f'Se actualizo el nievel educativo con el ID {id} por -> {self.nombre_curso}')
+            print(f'Se actualizo el curso con el ID {id} por -> {self.nombre_curso}')
         except Exception as e:
             print(f'{str(e)}')
 
