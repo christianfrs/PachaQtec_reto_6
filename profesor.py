@@ -19,7 +19,7 @@ class Profesor:
         '''
         try:
             db = Connection()
-            cursor = db.execute_query(select_table_id)
+            cursor = db.execute_query(select_table_query)
             self.lista_profesor = cursor.fetchall()
             for profesor in self.lista_profesor:
                 self.id = profesor[0]
@@ -35,12 +35,12 @@ class Profesor:
     def consultar_profesor_todos(self):
 
         select_table_query = f'''
-        SELECT id, nombres, apellido_pat, apellido_mat
-            FROM profesor;
+            SELECT id, nombres, apellido_pat, apellido_mat
+                FROM profesor;
         '''
         try:
             db = Connection()
-            cursor = db.execute_query(select_table_id)
+            cursor = db.execute_query(select_table_query)
             self.lista_profesor = cursor.fetchall()
         except Exception as e:
             print(f'Error -> {str(e)}')
@@ -50,13 +50,13 @@ class Profesor:
     def guardar_profesor(self):
 
         insert_table_query = f'''
-            INSERT INTO profesor(id, nombres, apellido_pat, apellido_mat)
-                VALUES({self.id}, {self.nombres}, {self.apellido_pat}, {self.apellido_mat});
+            INSERT INTO profesor(nombres, apellido_pat, apellido_mat)
+                VALUES('{self.nombres}', '{self.apellido_pat}', '{self.apellido_mat}');
         '''
 
         try:
             db = Connection()
-            cursor = db.execute_query(insert_table_id)
+            cursor = db.execute_query(insert_table_query)
             db.commit()
         except Exception as e:
             print(f'Error -> {str(e)}')
@@ -66,29 +66,43 @@ class Profesor:
     def eliminar_profesor_id(self):
 
         delete_table_query = f'''
-            DELETE FROM profesor WHERE id = {self.id}
-        '''
-
-        try:
-            db = Connetion()
-            cursor = db.execute_query(delete_table_query)
-            db.commit()
-        except Exception as e:
-            print(f'Error -> {str(e)}')
-        finally:
-            db.close_connection()
-
-    def aperturar_curso_profesor(self, id_curso_profesor='', id_apertura, id_curso, id_profesor):
-        
-        insert_table_query = f'''
-        INSERT INTO apertura_curso_profesor(id, idapertura, idcurso, idprofesor)
-            VALUES({id_curso_profesor}, {id_apertura}, {id_curso}, {id_profesor});
+            DELETE FROM profesor WHERE id = {self.id};
         '''
 
         try:
             db = Connection()
-            cursor = db.execute_query(insert_table_id)
+            db.execute_query(delete_table_query)
+            db.commit()
+            db.close_connection()
+        except Exception as e:
+            print(f'Error -> {str(e)}')
+        finally:
+            print('proceso de eliminacion finalizado')#db.close_connection()
+
+    def aperturar_curso_profesor(self, id_apertura, id_curso, id_profesor):
+
+        insert_table_query = f'''
+            INSERT INTO apertura_curso_profesor(id, idapertura, idcurso, idprofesor)
+                VALUES({id_apertura}, {id_curso}, {id_profesor});
+        '''
+
+        try:
+            db = Connection()
+            cursor = db.execute_query(insert_table_query)
         except Exception as e:
             print(f'Error -> {str(e)}')
         finally:
             db.close_connection()
+
+
+# nuevo_profesor = Profesor('', 'Pedro2', 'Ramirez', 'Rios')
+# nuevo_profesor.guardar_profesor()
+profesor = Profesor(id = 10) #100, 'Pedro', 'Ramirez', 'Rios')
+profesor.consultar_profesor_id()
+
+print(f'id -> {profesor.id}, nombres -> {profesor.nombres}')
+
+# for i in profesor.lista_profesor:
+#     print(i)
+
+#profesor.eliminar_profesor_id()
