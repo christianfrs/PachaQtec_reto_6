@@ -50,13 +50,29 @@ class Profesor:
     def guardar_profesor(self):
 
         insert_table_query = f'''
-        INSERT INTO profesor(id, nombres, apellido_pat, apellido_mat)
-            VALUES({self.id}, {self.nombres}, {self.apellido_pat}, {self.apellido_mat});
+            INSERT INTO profesor(id, nombres, apellido_pat, apellido_mat)
+                VALUES({self.id}, {self.nombres}, {self.apellido_pat}, {self.apellido_mat});
         '''
 
         try:
             db = Connection()
             cursor = db.execute_query(insert_table_id)
+            db.commit()
+        except Exception as e:
+            print(f'Error -> {str(e)}')
+        finally:
+            db.close_connection()
+
+    def eliminar_profesor_id(self):
+
+        delete_table_query = f'''
+            DELETE FROM profesor WHERE id = {self.id}
+        '''
+
+        try:
+            db = Connetion()
+            cursor = db.execute_query(delete_table_query)
+            db.commit()
         except Exception as e:
             print(f'Error -> {str(e)}')
         finally:
