@@ -128,14 +128,10 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-
-=======
-<<<<<<< HEAD
-/reto1S06HR01
-=======
-/reto1S06HR01
-/curso.py
-/nivel_educativo.py
-/main.py
-/database.py
->>>>>>> 194cec24c7fbfc92a8b2dae18a2c937fd24d4dc7
+*connection.py
+*main.py
+*nivel_educativo.py
+profesor.py
+*anio_escolar.py
+curso.py
+main2.py
