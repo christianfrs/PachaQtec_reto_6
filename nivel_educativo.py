@@ -1,7 +1,6 @@
 from conn1 import Connection
 class Nivel_educativo:
-    def __init__(self, id='', nombre=''):
-        self.id = id
+    def __init__(self, nombre=''):
         self.nombre = nombre
         
     def fetchall_neduc(self):
@@ -61,7 +60,7 @@ class Nivel_educativo:
             conn = Connection()
             query = f'''
                 INSERT INTO nivel_educativo (nombre) 
-                VALUES('{self.nombre}')
+                VALUES('{self.nombre}');
             '''
             conn.execute_query(query)
             conn.commit()
@@ -81,3 +80,21 @@ class Nivel_educativo:
             print(f'Se actualizo el nivel educativo con el ID {id} por -> {self.nombre}')
         except Exception as e:
             print(f'{str(e)}')
+
+    def delete_neduc(self, id):
+        try:
+            conn = Connection()
+            query = f'''
+                DELETE FROM nivel_educativo WHERE id = {id};
+            '''
+            conn.execute_query(query)
+            conn.commit()
+
+            print(f'Se elimino el nivel_educativo con ID {id}')
+        except Exception as e:
+            print(f'{str(e)}')
+
+C=Nivel_educativo('Primaria')
+#C.insert_neduc()
+C.fetchone_neduc()
+

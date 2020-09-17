@@ -1,7 +1,6 @@
 from conn1 import Connection
 class Cursos:
-    def __init__(self, id_curso='', nombre_curso=''):
-        self.id = id_curso
+    def __init__(self, nombre_curso=''):
         self.nombre = nombre_curso
         
     def fetchall_curso(self):
@@ -61,7 +60,7 @@ class Cursos:
             conn = Connection()
             query = f'''
                 INSERT INTO curso (nombre) 
-                VALUES('{self.nombre}')
+                VALUES('{self.nombre}');
             '''
             conn.execute_query(query)
             conn.commit()
@@ -81,3 +80,21 @@ class Cursos:
             print(f'Se actualizo el curso con el ID {id} por -> {self.nombre}')
         except Exception as e:
             print(f'{str(e)}')
+
+    def delete_curso(self, id):
+        try:
+            conn = Connection()
+            query = f'''
+                DELETE FROM curso WHERE id = {id};
+            '''
+            conn.execute_query(query)
+            conn.commit()
+
+            print(f'Se elimino el curso con ID {id}')
+        except Exception as e:
+            print(f'{str(e)}')
+
+B=Cursos('Lenguaje')
+B.delete_curso(3)
+#B.fetchone_curso()
+#B.fetchall_curso()

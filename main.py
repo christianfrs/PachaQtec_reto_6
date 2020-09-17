@@ -1,4 +1,8 @@
+from database import Database
 from conn1 import Connection
+
+conn=Connection()
+database=Database(conn)
 
 class Nivel_educativo:
     def __init__(self, id_ned='', descrip_ned=''):
@@ -8,15 +12,7 @@ class Nivel_educativo:
 
     def create_table(self):
         try:
-            conn = Connection()
-            query = '''
-                CREATE TABLE IF NOT EXISTS nivel_educativo(
-                    id_ned  SERIAL  PRIMARY KEY NOT NULL,
-                    descrip_ned varchar(50) NOT NULL
-                );
-            '''
-            conn.execute_query(query)
-            conn.commit()
+            database.crear_nivel_educativo()
         except Exception as e:
             raise print(e)
         
