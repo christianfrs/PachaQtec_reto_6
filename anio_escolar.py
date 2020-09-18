@@ -1,7 +1,7 @@
-from conn1 import Connection
+from connection import Connection
 
 class Anio_escolar:
-    def __init__(self, id='', anio='',descripcion='', lista_anio=[], lista_apertura_esc=[]):
+    def __init__(self, id='', anio='',descripcion='', lista_anio=[]):
         self.id = id
         self.anio = anio
         self.descripcion = descripcion
@@ -17,10 +17,16 @@ class Anio_escolar:
             '''
             cursor = conn.execute_query(query)
             self.lista_anio = cursor.fetchall()
-            for anio in self.lista_anio:
-                self.id = anio[0]
-                self.anio = anio[1]
-                self.descripcion = anio[2]               
+
+            if self.lista_anio:
+                for anio in self.lista_anio:
+                    self.id = anio[0]
+                    self.anio = anio[1]
+                    self.descripcion = anio[2]
+            else:
+                print(f"Año escolar con código {self.id} no encontrado")
+                self.id = ''
+
         except Exception as e:
             print(f'Error -> {str(e)}')
         finally:
@@ -35,6 +41,7 @@ class Anio_escolar:
             '''
             cursor = conn.execute_query(query)
             self.lista_anio = cursor.fetchall()
+
         except Exception as e:
             print(f'Error -> {str(e)}')
         finally:
@@ -100,14 +107,17 @@ class Anio_escolar:
             #[model, price] => model,price
             conn = Connection()
             query = f'''
-                INSERT INTO anio_escolar (anio,descripcion) 
-                VALUES('{self.anio}','{self.descripcion}');
+                INSERT INTO anio_escolar (anio, descripcion) 
+                VALUES('{self.anio}', '{self.descripcion}');
             '''
             conn.execute_query(query)
             conn.commit()
-            print(f'Se agrego un año escolcar -> {self.anio}')
+            conn.close_connection()
+
+            print(f'Se agregó un año escolar -> {self.anio}')
+
         except Exception as e:
-            print(f'{str(e)}')
+            print(f'Error -> {str(e)}')
 
     def update_anio_escolar(self, id):
         try:
@@ -143,22 +153,10 @@ class Anio_escolar:
                     VALUES({idanio}, {idgrado});
             '''
             conn.execute_query(query)
-        except Exception as e:
-            print(f'Error -> {str(e)}')
-        finally:
-            conn.close_connection()
+            conn.commit()
 
-    def consultar_apertura_esc_todos(self):
-        try:
-            conn = Connection()
-            query = f'''
-                SELECT A.id, B.anio, C.idnivel, C.nombre
-                    FROM apertura_escolar A
-                    Left join anio_escolar B on A.idanio = B.id
-                    left join grado_salon C on A.idgrado = C.id;
-            '''
-            cursor = conn.execute_query(query)
-            self.lista_apertura_esc = cursor.fetchall()
+            print(f"Se ejecutó el proceso de aperturar año escolar")
+
         except Exception as e:
             print(f'Error -> {str(e)}')
         finally:
