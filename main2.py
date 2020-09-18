@@ -3,6 +3,7 @@ import nivel_educativo
 from profesor import Profesor
 from curso import Cursos
 from anio_escolar import Anio_escolar
+from alumno import Alumno
 from nivel_educativo import Nivel_educativo
 from grado_salon import Grado_salon
 
@@ -159,7 +160,50 @@ try:
                     input("Presione cualquier tecla para retornar al módulo >> ")
 
                 elif opcion == '5': # asignar curso a profesor.
-                    pass
+                    clear()
+                    print("Profesor -> asignar curso a profesor")
+                    print("-------------------------------")
+                    profesor = Profesor()
+
+                    profesor.consultar_profesor_todos()
+                    print(f"{'código':<10} {'Nombres':<25} {'Apellido Pat.':<20} {'Apellido Mat.':<20}")
+                    print("Profesores -> lista profesores")
+                    print("-------------------------------------------------------------------------------")
+                    if profesor.lista_profesor:
+                        for p in profesor.lista_profesor:
+                            print(f"{p[0]:<10} {p[1]:<25} {p[2]:<20} {p[3]:<20}")
+                    else:
+                        print(f"Mensaje -> Sin datos de profesor")
+                    print()
+                    id_profesor=input("Selecciona el código profesor a asignar >> ")
+
+                    apertura_grado=Anio_escolar()
+                    apertura_grado.consultar_apertura_esc_todos()
+                    print("Apertura Grado -> lista Grados a seleccionar")
+                    print(f"{'código':<10} {'Año':<25} {'Nivel':<20} {'Grado':<20}")
+                    print("-------------------------------------------------------------------------------")
+                    if apertura_grado.lista_apertura_esc:
+                        for p in apertura_grado.lista_apertura_esc:
+                            print(f"{p[0]:<10} {p[1]:<25} {p[2]:<20} {p[3]:<20}")
+                    else:
+                        print(f"Mensaje -> Sin datos de apertura")
+                    print()
+                    id_apertura = input("Selecciona el código del grado aperturado >> ")
+
+                    curso=Cursos()
+                    curso.consultar_curso_todos()
+                    print("Curso -> lista de cursos")
+                    print(f"{'código':<10} {'Curso':<25}")
+                    print("-------------------------------------------------------------------------------")
+                    if curso.lista_curso:
+                        for p in curso.lista_curso:
+                            print(f"{p[0]:<10} {p[1]:<25}")
+                    else:
+                        print(f"Mensaje -> Sin datos de apertura")
+                    print()
+                    id_curso = input("Selecciona el código del curso >> ")
+
+                    profesor.aperturar_curso_profesor(id_apertura, id_curso, id_profesor)
         
         elif opcion == '2': #Curso
             while True:
@@ -437,18 +481,131 @@ try:
                 if opcion == '0':
                     opcion = ''
                     break
-                elif opcion == '1':
-                    pass
-                elif opcion == '2':
-                    pass
-                elif opcion == '3':
-                    pass
+                elif opcion == '1': #Listar alumnos por grado
+                    clear()
+                    print("Alumno -> buscar alumno por grado")
+                    print("--------------------------------------")
+                    print()
+                    apertura_escolar = Anio_escolar()
+
+                    apertura_escolar.consultar_apertura_esc_todos()
+                    print(f"{'código':<10} {'Año':<25} {'Nivel':<20} {'Grado':<20}")
+                    print("Grados -> Grados por año de apertura")
+                    print("-------------------------------------------------------------------------------")
+                    if apertura_escolar.lista_apertura_esc:
+                        for p in apertura_escolar.lista_apertura_esc:
+                            print(f"{p[0]:<10} {p[1]:<25} {p[2]:<20} {p[3]:<20}")
+                    else:
+                        print(f"Mensaje -> Sin datos de grado")
+                    print()
+                    id_apertura = input("Selecciona el código del grado aperturado >> ")
+
+                    alumno=Alumno()
+                    alumno.consultar_alumno_grado(id_apertura)
+                    print(f"{'código':<10} {'Nombres':<25} {'Apellido paterno':<20} {'Apellido materno':<20}")
+                    print("Alumnos -> Alumnos encontrados en el grado")
+                    print("-------------------------------------------------------------------------------")
+                    if alumno.lista_alumno:
+                        for p in alumno.lista_alumno:
+                            print(f"{p[0]:<10} {p[1]:<25} {p[2]:<20} {p[3]:<20}")
+                    else:
+                        print(f"Mensaje -> Sin datos de alumno")
+
+
+                elif opcion == '2': #buscar alumnos por nombre
+                    clear()
+                    print("Alumno -> buscar alumno por nombre")
+                    print("--------------------------------------")
+                    print()
+                    anio = input('Ingresar el año donde buscará al alumno >> ')
+                    nombre = input('Ingresar el nombre del alumno >> ')
+                    print()
+
+                    alumno = Alumno()
+                    alumno.consultar_alumno_nombre(nombre,anio)
+
+                    if alumno.nombres:
+                        print(f"Código: {alumno.id:>15}")
+                        print(f"Nombre: {alumno.nombres:>18}")
+                        
+                    else:
+                        print(f"Mensaje -> Alumno con nombre -> {nombre}, no encontrado")
+                    print()
+                    input("Presione cualquier tecla para retornar al módulo >> ")
+
+                elif opcion == '3': #registrar alumno grado
+                    clear()
+                    print("Alumno -> registrar alumno grado")
+                    print("-------------------------------")
+                    alumno = Alumno()
+                    idapertura = input('Ingresar el código del año aperturado >> ')
+                    idalumno = input('Ingresar el código del alumno >> ')
+
+                    alumno.aperturar_alumno_grado(idapertura,idalumno)
+
+                    print()
+                    input("Presione cualquier tecla para retornar al módulo >> ")
+
                 elif opcion == '4':
                     pass
-                elif opcion == '5':
-                    pass 
+                elif opcion == '5': #modificar alumno
+                    clear()
+                    print("Alumno -> Modificar alumno")
+                    print("-------------------------------")
+                    print()
+                    
+                    alumno = Alumno()
+                    while True:
+                        dato = input('Ingresar código de alumno >> ')
+                        if dato:
+                            alumno.id = dato
+                            break
+                        print("Mensaje -> Campo obligatorio")
+                        print()
+                    
+                    nombre = input('Ingresar los nombres nuevamente >> ')
+                    ap_pat = input('Ingresar el apellido paterno nuevamente >> ')
+                    ap_mat = input('Ingresar el apellido materno nuevamente >> ')
+                    alumno = Alumno(dato,nombre,ap_pat,ap_mat)
+                    
+                    if alumno.id:
+                        confirmacion = input(f'Seguro que desea actualizar el alumno -> {alumno.nombres} {alumno.apellido_pat} por (Y/N) >> ')
+                        if confirmacion == 'Y' or confirmacion == 'y':
+                            alumno.update_alumno(dato)
+                        else:
+                            print("Mensaje -> Proceso cancelado por el usuario")
+                    else:
+                        print(f"Mensaje -> Alumno con código -> {dato}, no encontrado")
+                    print()
+                    input("Presione cualquier tecla para retornar al módulo >> ")
+
                 elif opcion == '6':
-                    pass
+                    clear()
+                    print("Alumno -> eliminar alumno")
+                    print("-------------------------------")
+                    print()
+                    
+                    alumno = Alumno()
+                    while True:
+                        dato = input('Ingresar código de alumno >> ')
+                        if dato:
+                            profesor.id = dato
+                            break
+                        print("Mensaje -> Campo obligatorio")
+                        print()
+                    
+                    profesor.consultar_alumno_id()
+                    if alumno.id:
+                        confirmacion = input(f'Seguro que desea eliminar al alumno -> {alumno.nombres} {alumno.apellido_pat} (Y/N) >> ')
+                        if confirmacion == 'Y' or confirmacion == 'y':
+                            profesor.eliminar_alumno_id()
+                        else:
+                            print("Mensaje -> Proceso cancelado por el usuario")
+                    else:
+                        print(f"Mensaje -> Profesor con código -> {dato}, no encontrado")
+                    
+                    print()
+                    input("Presione cualquier tecla para retornar al módulo >> ")
                 elif opcion == '7':
                     pass
                 elif opcion == '8':

@@ -443,18 +443,22 @@ try:
                         print("Mensaje -> Campo obligatorio")
                         print()
                     
-                    alumno.update_alumno(dato)
+                    nombre = input('Ingresar los nombres nuevamente >> ')
+                    ap_pat = input('Ingresar el apellido paterno nuevamente >> ')
+                    ap_mat = input('Ingresar el apellido materno nuevamente >> ')
+                    alumno = Alumno(dato,nombre,ap_pat,ap_mat)
+                    
                     if alumno.id:
-                        confirmacion = input(f'Seguro que desea actualizar el alumno -> {alumno.nombres} {alumno.apellido_pat} (Y/N) >> ')
+                        confirmacion = input(f'Seguro que desea actualizar el alumno -> {alumno.nombres} {alumno.apellido_pat} por (Y/N) >> ')
                         if confirmacion == 'Y' or confirmacion == 'y':
                             alumno.update_alumno(dato)
                         else:
                             print("Mensaje -> Proceso cancelado por el usuario")
                     else:
                         print(f"Mensaje -> Alumno con código -> {dato}, no encontrado")
-                    
                     print()
                     input("Presione cualquier tecla para retornar al módulo >> ")
+
                 elif opcion == '6':
                     clear()
                     print("Alumno -> eliminar alumno")

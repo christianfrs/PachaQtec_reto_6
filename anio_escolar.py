@@ -162,6 +162,22 @@ class Anio_escolar:
         finally:
             conn.close_connection()
 
+    def consultar_apertura_esc_todos(self):
+        try:
+            conn = Connection()
+            query = f'''
+                SELECT A.id, B.anio, C.idnivel, C.nombre
+                    FROM apertura_escolar A
+                    Left join anio_escolar B on A.idanio = B.id
+                    left join grado_salon C on A.idgrado = C.id;
+            '''
+            cursor = conn.execute_query(query)
+            self.lista_apertura_esc = cursor.fetchall()
+        except Exception as e:
+            print(f'Error -> {str(e)}')
+        finally:
+            conn.close_connection()
+
 #A=anio_escolar('2020','Dos mil veinte')
 #A.guardar_anio_escolar()
 #A.fetchone_alumno()
