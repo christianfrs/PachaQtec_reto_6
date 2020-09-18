@@ -59,7 +59,7 @@ class Alumno:
                 Inner join apertura_alumno_grado B on A.id = B.idalumno
                 Inner join apertura_escolar C on B.idapertura=C.id  
                 Inner join anio_escolar D on C.idanio=D.id             
-                WHERE D.anio='{anio}' and A.nombres like '{nombre}';
+                WHERE D.anio='{anio}' and A.nombres like '%{nombre}%';
             '''
             cursor = conn.execute_query(query)
             self.lista_alumno = cursor.fetchall()
