@@ -79,23 +79,23 @@ class Nivel_educativo:
         else:
             print(f'La tabla "nivel_educativo" y sus valores ya fueron inicializados correctamente')
 
-# CONSULTAR TODOS LOS NIVELES
-# Instanciar objeto
-nivel = Nivel_educativo()
-# ejecutar método de instancia
-nivel.consultar_nivel_todos()
-# listar niveles de la tupla
-for nivel in nivel.lista_nivel:
-    print(f'nivel -> {nivel[0]}', end=', ')
-    print(f'nombre: -> {nivel[1]}')
-
-# # CONSULTAR NIVEL POR ID
-# #Instanciar objeto
-# nivel = Nivel_educativo(2)
-# nivel.consultar_nivel_id()
-# print(f'nivel -> {nivel.id} nombre -> {nivel.nombre}')
-
-# # INICIALIZAR TABLA Y VALORES POR DEFECTO
+# # CONSULTAR TODOS LOS NIVELES
 # # Instanciar objeto
 # nivel = Nivel_educativo()
-# nivel.inicializar_datos_constantes()
+# # ejecutar método de instancia
+# nivel.consultar_nivel_todos()
+# # listar niveles de la tupla
+# for nivel in nivel.lista_nivel:
+#     print(f'nivel -> {nivel[0]}', end=', ')
+#     print(f'nombre: -> {nivel[1]}')
+
+# # # CONSULTAR NIVEL POR ID
+# # #Instanciar objeto
+# # nivel = Nivel_educativo(2)
+# # nivel.consultar_nivel_id()
+# # print(f'nivel -> {nivel.id} nombre -> {nivel.nombre}')
+
+# # # INICIALIZAR TABLA Y VALORES POR DEFECTO
+# # # Instanciar objeto
+# # nivel = Nivel_educativo()
+# # nivel.inicializar_datos_constantes()
