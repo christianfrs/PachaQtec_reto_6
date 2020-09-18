@@ -21,11 +21,15 @@ class Profesor:
             db = Connection()
             cursor = db.execute_query(select_table_query)
             self.lista_profesor = cursor.fetchall()
-            for profesor in self.lista_profesor:
-                self.id = profesor[0]
-                self.nombres = profesor[1]
-                self.apellido_pat = profesor[2]
-                self.apellido_mat = profesor[3]
+            
+            if self.lista_profesor:
+                for profesor in self.lista_profesor:
+                    self.id = profesor[0]
+                    self.nombres = profesor[1]
+                    self.apellido_pat = profesor[2]
+                    self.apellido_mat = profesor[3]
+            else:
+                self.id = ''
 
         except Exception as e:
             print(f'Error -> {str(e)}')
@@ -56,7 +60,7 @@ class Profesor:
 
         try:
             db = Connection()
-            cursor = db.execute_query(insert_table_query)
+            db.execute_query(insert_table_query)
             db.commit()
         except Exception as e:
             print(f'Error -> {str(e)}')
@@ -88,7 +92,7 @@ class Profesor:
 
         try:
             db = Connection()
-            cursor = db.execute_query(insert_table_query)
+            db.execute_query(insert_table_query)
         except Exception as e:
             print(f'Error -> {str(e)}')
         finally:
@@ -97,10 +101,10 @@ class Profesor:
 
 # nuevo_profesor = Profesor('', 'Pedro2', 'Ramirez', 'Rios')
 # nuevo_profesor.guardar_profesor()
-profesor = Profesor(id = 10) #100, 'Pedro', 'Ramirez', 'Rios')
-profesor.consultar_profesor_id()
+# profesor = Profesor(id = 10) #100, 'Pedro', 'Ramirez', 'Rios')
+# profesor.consultar_profesor_id()
 
-print(f'id -> {profesor.id}, nombres -> {profesor.nombres}')
+# print(f'id -> {profesor.id}, nombres -> {profesor.nombres}')
 
 # for i in profesor.lista_profesor:
 #     print(i)

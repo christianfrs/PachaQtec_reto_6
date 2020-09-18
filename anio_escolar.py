@@ -1,7 +1,7 @@
 from conn1 import Connection
 
-class anio_escolar:
-    def __init__(self, id='', anio='',descripcion='', lista_anio=[]):
+class Anio_escolar:
+    def __init__(self, id='', anio='',descripcion='', lista_anio=[], lista_apertura_esc=[]):
         self.id = id
         self.anio = anio
         self.descripcion = descripcion
@@ -139,10 +139,26 @@ class anio_escolar:
         try:
             conn = Connection()
             query = f'''
-                INSERT INTO apertura_alumno_grado(idanio, idgrado)
+                INSERT INTO apertura_escolar(idanio, idgrado)
                     VALUES({idanio}, {idgrado});
             '''
             conn.execute_query(query)
+        except Exception as e:
+            print(f'Error -> {str(e)}')
+        finally:
+            conn.close_connection()
+
+    def consultar_apertura_esc_todos(self):
+        try:
+            conn = Connection()
+            query = f'''
+                SELECT A.id, B.anio, C.idnivel, C.nombre
+                    FROM apertura_escolar A
+                    Left join anio_escolar B on A.idanio = B.id
+                    left join grado_salon C on A.idgrado = C.id;
+            '''
+            cursor = conn.execute_query(query)
+            self.lista_apertura_esc = cursor.fetchall()
         except Exception as e:
             print(f'Error -> {str(e)}')
         finally:

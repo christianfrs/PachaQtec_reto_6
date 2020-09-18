@@ -2,7 +2,7 @@ from psycopg2 import connect
 
 class Connection:
     def __init__(self, server='127.0.0.1', user='postgres', 
-                        password='R0s@N3gr@', database='colegio_reto_6_g2_prueba', port=5432):
+                        password='Christian1304', database='colegio_reto_6_g2', port=5432):
 
         self.db = connect(host=server, user=user, password=password, 
                         database=database, port=port)

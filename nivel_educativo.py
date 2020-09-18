@@ -1,4 +1,4 @@
-from conn1 import Connection
+from connection import Connection
 
 class Nivel_educativo:
 

@@ -29,6 +29,50 @@ class Alumno:
         finally:
             conn.close_connection()
 
+    def consultar_alumno_grado(self,idapertura):
+        try:
+            conn = Connection()
+            query = f'''
+                SELECT A.id, A.nombres, A.apellido_pat, A.apellido_mat
+                FROM alumno A
+                Inner join apertura_alumno_grado B on A.id = B.idalumno                
+                WHERE B.idapertura={idapertura};
+            '''
+            cursor = conn.execute_query(query)
+            self.lista_alumno = cursor.fetchall()
+            for alumno in self.lista_alumno:
+                self.id = alumno[0]
+                self.nombres = alumno[1]
+                self.apellido_pat = alumno[2]
+                self.apellido_mat = alumno[3]
+        except Exception as e:
+            print(f'Error -> {str(e)}')
+        finally:
+            conn.close_connection()
+
+    def consultar_alumno_nombre(self,nombre,anio):
+        try:
+            conn = Connection()
+            query = f'''
+                SELECT A.id, A.nombres, A.apellido_pat, A.apellido_mat
+                FROM alumno A
+                Inner join apertura_alumno_grado B on A.id = B.idalumno
+                Inner join apertura_escolar C on B.idapertura=C.id  
+                Inner join anio_escolar D on C.idanio=D.id             
+                WHERE D.anio='{anio}' and A.nombres like '{nombre}';
+            '''
+            cursor = conn.execute_query(query)
+            self.lista_alumno = cursor.fetchall()
+            for alumno in self.lista_alumno:
+                self.id = alumno[0]
+                self.nombres = alumno[1]
+                self.apellido_pat = alumno[2]
+                self.apellido_mat = alumno[3]
+        except Exception as e:
+            print(f'Error -> {str(e)}')
+        finally:
+            conn.close_connection()
+
     def consultar_alumno_todos(self):
         try:
             conn = Connection()
@@ -36,8 +80,6 @@ class Alumno:
                 SELECT id, nombres, apellido_pat, apellido_mat
                     FROM alumno;
             '''
-        
-            
             cursor = conn.execute_query(query)
             self.lista_alumno = cursor.fetchall()
         except Exception as e:
@@ -130,7 +172,7 @@ class Alumno:
         except Exception as e:
             print(f'{str(e)}')
 
-    def eliminar_alumno(self, id):
+    def eliminar_alumno_id(self, id):
         try:
             conn = Connection()
             query = f'''
@@ -172,8 +214,8 @@ class Alumno:
         try:
             conn = Connection()
             query = f'''
-                INSERT INTO registro_nota_periodo_alumno(idalumnocurso, idperiodoeval)
-                    VALUES({idalumnocurso}, {idperiodoeval});
+                INSERT INTO registro_nota_periodo_alumno(idalumnocurso, idperiodoeval,nota)
+                    VALUES({idalumnocurso}, {idperiodoeval},{nota});
             '''
             conn.execute_query(query)
         except Exception as e:
