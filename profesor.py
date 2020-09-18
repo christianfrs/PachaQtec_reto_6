@@ -60,7 +60,7 @@ class Profesor:
 
         try:
             db = Connection()
-            db.execute_query(insert_table_query)
+            cursor = db.execute_query(insert_table_query)
             db.commit()
         except Exception as e:
             print(f'Error -> {str(e)}')
@@ -92,7 +92,7 @@ class Profesor:
 
         try:
             db = Connection()
-            db.execute_query(insert_table_query)
+            cursor = db.execute_query(insert_table_query)
         except Exception as e:
             print(f'Error -> {str(e)}')
         finally:
